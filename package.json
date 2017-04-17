@@ -1,0 +1,31 @@
+{
+  "name": "voting-app",
+  "version": "1.0.0",
+  "description": "## A full stack application integrated with MongoDB. Created with a Node/Express backend and a ReactJS front end.",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mongoose": "^4.9.5"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libeja/voting-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/libeja/voting-app/issues"
+  },
+  "homepage": "https://github.com/libeja/voting-app#readme"
+}
