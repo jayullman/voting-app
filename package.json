@@ -2,10 +2,14 @@
   "name": "voting-app",
   "version": "1.0.0",
   "description": "## A full stack application integrated with MongoDB. Created with a Node/Express backend and a ReactJS front end.",
-  "main": "index.js",
+  "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "mongoose": "^4.9.5"
+    "express-session": "^1.15.2",
+    "mongoose": "^4.9.5",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -16,7 +20,10 @@
     "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js",
+    "serve": "webpack-dev-server --host 0.0.0.0",
+    "build": "webpack -p",
+    "deploy": "git push heroku master"
   },
   "repository": {
     "type": "git",
