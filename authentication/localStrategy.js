@@ -33,7 +33,7 @@ module.exports = new LocalStrategy({
   },
   function (username, password, done) {
     const user = users.findIndex((user) => {
-      if (user.email === 'jayullman@gmail.com') {
+      if (user.email === 'j@gmail.com') {
         return true;
       }
     });
