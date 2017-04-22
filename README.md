@@ -18,3 +18,56 @@ A full stack application integrated with MongoDB. Created with a Node/Express ba
 7. As an unauthenticated or authenticated user, I can see the results of polls in chart form. (This could be implemented using Chart.js or Google Charts.)
 
 8. As an authenticated user, if I don't like the options on a poll, I can create a new option.
+
+***
+
+### API endpoints
+
+#### Unprotected Routes (user does not have to be authenticated)
+
+get list of all polls available to all viewers
+
+`GET /polls`
+
+Signs up new user and adds to DB
+
+`POST /signup`
+
+Logs user in
+
+`POST /login`
+
+Logs user out
+
+`POST /logout`
+
+Vote on a poll
+
+`PUT /polls/:pollId?option=`
+
+#### Protected Routes (user must be authenticated)
+
+Go to the create new poll page if authenticated
+
+`GET /createpoll`
+
+create new poll if authenticated
+
+`POST /createpoll`
+
+Add option to poll if authenticated
+
+`PUT /polls/newoption/:pollId?option=`
+
+Delete poll if authenticated
+
+`DELETE /polls/:pollId`
+
+Get list of users poll if authenticated
+
+`GET /mypolls`
+
+
+
+
+
