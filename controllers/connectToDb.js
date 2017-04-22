@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-url = 'mongodb://localhost:27017';
+url = 'mongodb://localhost:27017/voting';
 const db = mongoose.connection;
 
 module.exports = function() {
@@ -8,5 +8,4 @@ module.exports = function() {
   db.on('open', () => {
     console.log('Connected to database');
   });
-
 }

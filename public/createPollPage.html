@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <script src="https://use.fontawesome.com/cd50ad1c20.js"></script>
+  <title>Create Poll</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="app.js"></script>
+
+  <form action="/createPoll" method="post">
+    <div>
+      <label>Title:</label>
+      <input type="text" name="title" />
+    </div>
+    <div>
+      <label>Options:</label>
+      <input type="text" name="option1" />
+    </div>
+    <div>
+      <label>Options:</label>
+      <input type="text" name="option2" />
+    </div>
+    <div>
+      <input type="submit" value="Submit Poll" />
+    </div>
+  </form>
+
+</body>
+</html>
