@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-  entry: './index.js',
+  entry: './client/index.js',
   output: {
     filename: 'app.js',
     path: path.join(__dirname, '/public')
@@ -22,5 +22,7 @@ module.exports = {
   },
   devServer: {
     contentBase: __dirname + '/public'
-  }
+  },
+  devtool: 'eval-source-map',
+  watch: true
 }

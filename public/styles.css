@@ -1,0 +1,153 @@
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 25px;
+  height: 20px;
+  right: 10px;
+  top: 10px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: #373a47;
+  background: #fff;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: #bdc3c7;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: #373a47;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: #373a47;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: #b8b7ad;
+  padding: 0.8em;
+}
+
+/* Styling of overlay */
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* End hamburger menu styles */
+
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  text-align: center;
+}
+
+/* Navigation Styles */
+nav a, nav li {
+  color: #fff;
+}
+
+nav li {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+.nav-container {
+  height: 30px;
+  background-color: #31a7ca;
+}
+
+.wide-nav {
+  background-color: #000;
+}
+
+.wide-nav li {
+  float: right;
+}
+
+#github-page-link {
+  float: left;
+}
+
+/* Header Styles */
+header {
+  height: 80px;
+  background-color: #31a7ca;
+  color: white;
+  text-align: center;
+  padding-top: 20px;
+}
+
+header h1 {
+  padding: 0;
+  margin: 0;
+}
+
+/* Footer Styles */
+footer {
+  height: 100px;
+  /*background-color: #2272b8;*/
+  color: #000;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.icons-container a {
+		margin: 0 10px;
+		position: relative;
+		transition: all .2s ease-in;
+		text-decoration: none;
+		border: 0;
+}
+
+.icons-container a:hover {
+			top: 3px;
+}
+
+/* PollsPage Styles */
+
+.polls-container {
+  text-align: center;
+}
+
+/* the div that displays the poll title on the main page */
+.poll-card {
+  text-align: center;
+}
+
+@media (max-width: 460px) {
+  .narrow-nav {
+    display: block;
+  }
+  .wide-nav {
+    display: none;
+  }
+}
+
+@media (min-width: 460px) {
+  .narrow-nav {
+    display: none;
+  }
+  .bm-burger-button {
+    display: none;
+  }
+  .wide-nav {
+    display: initial;
+  }
+}

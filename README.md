@@ -25,9 +25,13 @@ A full stack application integrated with MongoDB. Created with a Node/Express ba
 
 #### Unprotected Routes (user does not have to be authenticated)
 
-get list of all polls available to all viewers
+Get list of all polls available to all viewers
 
 `GET /polls`
+
+Get information on a singlie poll
+
+`GET /polls/:pollId`
 
 Signs up new user and adds to DB
 

@@ -22,13 +22,21 @@ router.get('/secret', function(req, res) {
 router.post('/login',
   passport.authenticate('local', { failureRedirect: '/' }),
   function (req, res, info) {
-    res.redirect('secret.html');
+    res.redirect('/');
   }
 );
 
+router.post('/amiloggedin', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ status: true} );
+  } else {
+    res.json({ status: false });
+  }
+});
+
 router.post('/logout', function (req, res) {
   req.logout();
-  res.redirect('/');
+  res.sendStatus(200);
 });
 
 // signup route
@@ -117,6 +125,14 @@ router.get('/mypolls', checkAuthenticated, (req, res) => {
   const userId = req.session.passport.user;
   Poll.find({ creator: userId }, (err, polls) => {
     res.json(polls);
+  });
+});
+
+// get information on a specific poll
+router.get('/polls/:pollId', (req, res) => {
+  const pollId = req.params.pollId;  
+  Poll.findById(pollId, (err, poll) => {
+    res.json(poll);
   });
 });
 
@@ -214,6 +230,11 @@ router.put('/polls/newoption/:pollId', (req, res) => {
     );
     res.send('ok');    
   });
+});
+
+// route will handle if user enters url into address bar
+router.get('*', (req, res) => {
+  res.redirect('/');
 });
 
 module.exports = router;
