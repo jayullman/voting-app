@@ -46,7 +46,7 @@ class App extends Component {
           loggedIn={this.state.loggedIn}
         />
         <Header />
-        <Main />
+        <Main loggedIn={this.state.loggedIn} />
         <Footer />
         {
           this.state.loggedIn

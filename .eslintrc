@@ -18,7 +18,9 @@
     "no-trailing-spaces": 0,
     "no-underscore-dangle": 0,
     "spaced-comment": 0,
-    "no-unused-vars": 1
+    "no-unused-vars": 1,
+    "max-len": 1,
+    "semi": 1
   },
   "plugins": [
     "react"

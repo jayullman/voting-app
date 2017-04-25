@@ -1,17 +1,21 @@
 import React from 'react';
 
 const Form = ({ buttonText, url }) => (
-  <form action={url} method="post">
+  <form className='account-info-form' action={url} method="post">
     <div>
-      <label>Email:</label>
-      <input type="text" name="email" />
+      <label>
+        Email
+        <input type="text" name="email" required />
+      </label>
     </div>
     <div>
-      <label>Password:</label>
-      <input type="password" name="password" />
+      <label>
+        Password
+        <input type="password" name="password" required />
+      </label>
     </div>
     <div>
-      <input type="submit" value={buttonText} />
+      <input className='button' type="submit" value={buttonText} />
     </div>
   </form>
 );

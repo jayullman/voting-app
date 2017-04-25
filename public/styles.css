@@ -56,6 +56,13 @@ body, html {
 
 body {
   text-align: center;
+  font-size: 16px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+
+h1 {
+  font-weight: 400;
 }
 
 /* Navigation Styles */
@@ -124,6 +131,39 @@ footer {
 
 .polls-container {
   text-align: center;
+}
+
+/* Form Styles */
+
+.account-info-form {
+  text-align: left;
+  width: 250px;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.account-info-form input[type='text'],
+.account-info-form input[type='password'] {
+  display: block;
+  border: 1px solid #c4c4c4;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.account-info-form .button {
+  background: linear-gradient(#1af0f4, #0e888a);
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 1em;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.account-info-form label {
+  display: block;
 }
 
 /* the div that displays the poll title on the main page */

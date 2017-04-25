@@ -151,10 +151,10 @@ router.put('/polls/:pollId', (req, res) => {
   const userId = 5443;
 
   const pollId = req.params.pollId;
-
+  console.log(pollId);
   // name of the option voted for
   const option = req.query.option;
-
+  console.log(option);
   Poll.findById(pollId, (err, poll) => {
 
     // returns if poll is not found
@@ -192,14 +192,21 @@ router.put('/polls/:pollId', (req, res) => {
   });
 });
 
-// add option to poll if authenticated
+// add option to poll if authenticated and vote on it
 router.put('/polls/newoption/:pollId', (req, res) => {
-  // check if user is authenticated
+  if (!req.isAuthenticated()) {
+   return res.sendStatus(401);
+  }
 
+  const userId = 5443;
+  
   const pollId = req.params.pollId;
 
   // name of the option being added
   const option = req.query.option;
+
+  console.log(pollId);
+  console.log(option);
 
   // find poll to get array of existing options
   Poll.findById(pollId, (err, poll) => {
@@ -213,20 +220,26 @@ router.put('/polls/newoption/:pollId', (req, res) => {
     if (optArr.indexOf(option) === -1) {
       const optionObject = {
         name: option,
-        votes: 0
+        votes: 1
       };
       optArr.push(optionObject);
     }
+    console.log(optArr);
 
-    const optionObject = {
-      name: option,
-      votes: 0
-    };
+    const votersArr = poll.voters;    
+
+    // checks if user has already voted in poll
+    if (votersArr.indexOf(userId) === -1) {
+      votersArr.push(userId);
+    }
     
     Poll.findByIdAndUpdate(
       pollId,
-      { $set: { options: optArr } }, 
-      (err) => {}
+      { $set: { options: optArr, voters: votersArr } }, 
+      (err, poll) => {
+        if (err) throw err;
+        console.log(poll);
+      }
     );
     res.send('ok');    
   });

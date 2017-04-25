@@ -6,15 +6,25 @@ import SignupPage from './SignupPage';
 import LoginPage from './LoginPage';
 import PollPage from './PollPage';
 
-const Main = () => (
-  <div>
-    <Switch>
-      <Route exact path='/' component={Home} />
-      <Route exact path='/pollpage/:pollid' component={PollPage} />
-      <Route path='/signup' component={SignupPage} />
-      <Route path='/login' component={LoginPage} />
-    </Switch>
-  </div>
-);
+const Main = (outerProps) => {
+  // create function that returns component in order to pass props to router
+  const myPollPage = props => (
+    <PollPage
+      loggedIn={outerProps.loggedIn}
+      {...props}
+    />
+  );
+
+  return (
+    <div>
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/pollpage/:pollid' render={myPollPage} />
+        <Route path='/signup' component={SignupPage} />
+        <Route path='/login' component={LoginPage} />
+      </Switch>
+    </div>
+  );
+};
 
 export default Main;
