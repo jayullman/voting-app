@@ -13,7 +13,7 @@ class PollsContainer extends Component {
   }
 
   componentDidMount() {
-    axios('/polls')
+    axios(this.props.url)
       .then((response) => {
         this.setState({ pollsArray: response.data });
       })
@@ -27,7 +27,6 @@ class PollsContainer extends Component {
     const polls = this.state.pollsArray.map(poll => 
       <Link key={poll._id} to={`/pollpage/${poll._id}`}><div className='poll-card'>{poll.title}</div></Link>
     );
-    console.log(this.state.pollsArray);
     return (
       <div className='pollsContainer'>
         {polls}

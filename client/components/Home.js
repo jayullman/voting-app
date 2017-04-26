@@ -2,9 +2,11 @@ import React from 'react';
 
 import PollsContainer from '../containers/PollsContainer';
 
+const url = '/polls';
+
 const Home = () => (
   <div>
-    <PollsContainer />
+    <PollsContainer url={url} />
   </div>
 );
 

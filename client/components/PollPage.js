@@ -1,6 +1,6 @@
 // Page that will display an individual poll for viewing and voting on
-
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Chart from 'chart.js';
 
@@ -21,6 +21,7 @@ class PollPage extends Component {
     this.retrievePollData = this.retrievePollData.bind(this);
     this.renderChart = this.renderChart.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.deletePoll = this.deletePoll.bind(this);
   }
 
   // retrieves poll data, returns a promise
@@ -40,6 +41,18 @@ class PollPage extends Component {
     }
 
     this.setState({ selectedValue: event.target.value });
+  }
+
+  deletePoll() {
+    axios.delete(`/polls/${this.props.match.params.pollid}`)
+      .then((response) => {
+        if (response.status === 200) {
+          this.context.router.history.push('/');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   handleSubmit(event) {
@@ -118,7 +131,6 @@ class PollPage extends Component {
   }
 
   render() {
-    console.log(this.props);
     if (Object.keys(this.state.pollData).length === 0) return null;
     const { title, options } = this.state.pollData;
     const optionSelections = options.map(option => <option key={option.name} value={option.name}>{option.name}</option>);
@@ -152,10 +164,15 @@ class PollPage extends Component {
             width='100' 
             height='100' 
           />
+          { this.props.loggedIn && <button onClick={this.deletePoll}>Delete Poll</button> }
         </div>
       </div>
     );
   }
 }
+
+PollPage.contextTypes = {
+  router: PropTypes.object
+};
 
 export default PollPage;

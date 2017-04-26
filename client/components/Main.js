@@ -5,10 +5,12 @@ import Home from './Home';
 import SignupPage from './SignupPage';
 import LoginPage from './LoginPage';
 import PollPage from './PollPage';
+import NewPollPage from './NewPollPage';
+import MyPolls from './MyPolls';
 
 const Main = (outerProps) => {
   // create function that returns component in order to pass props to router
-  const myPollPage = props => (
+  const PollPageWrapper = props => (
     <PollPage
       loggedIn={outerProps.loggedIn}
       {...props}
@@ -19,9 +21,11 @@ const Main = (outerProps) => {
     <div>
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route exact path='/pollpage/:pollid' render={myPollPage} />
+        <Route exact path='/mypolls' component={MyPolls} />
+        <Route exact path='/pollpage/:pollid' render={PollPageWrapper} />
         <Route path='/signup' component={SignupPage} />
         <Route path='/login' component={LoginPage} />
+        <Route path='/createpoll' component={NewPollPage} />
       </Switch>
     </div>
   );

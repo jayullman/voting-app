@@ -10,13 +10,18 @@ class NavBar extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      isMenuOpen: false
+    };
+
     this.handleLogOut = this.handleLogOut.bind(this);
+    this.handleSlideNavClick = this.handleSlideNavClick.bind(this);
   }
 
   handleLogOut() {
+    this.handleSlideNavClick();
     axios.post('/logout')
       .then(() => {
-        console.log('here');
         this.props.toggleLoggedInStatus();
         this.context.router.history.push('/');
       })
@@ -25,30 +30,40 @@ class NavBar extends React.Component {
       });
   }
 
+  handleSlideNavClick() {
+    this.setState({ isMenuOpen: false });
+  }
+
   render() {
+    const loggedIn = this.props.loggedIn;
+
     return (
       <div className='nav-container'>
         {/* For smaller screens */}
         <nav className='narrow-nav'>
-          <Menu right width={200}>
+          <Menu right width={200} isOpen={ this.state.isMenuOpen }>
             <li id="home" className="menu-item"><Link to='/'>Home</Link></li>
-            <li id="signupPage" className="menu-item"><Link to='/signup'>Sign up</Link></li>
+            {loggedIn && <li id="newpoll" className="menu-item"><Link onClick={this.handleSlideNavClick} to='/createpoll'>Create Poll</Link></li> }
+            {loggedIn && <li id="mypolls" className="menu-item"><Link onClick={this.handleSlideNavClick} to='/mypolls'>My Polls</Link></li> }
+            {!loggedIn && <li id="signupPage" className="menu-item"><Link onClick={this.handleSlideNavClick} to='/signup'>Sign up</Link></li> } 
             {
-              this.props.loggedIn
+              loggedIn
                 ? <li onClick={this.handleLogOut} id="logout-link" className="menu-item">Log Out</li>
-                : <li id="loginPage" className="menu-item"><Link to='/login'>Log In</Link></li>
+                : <li id="loginPage" className="menu-item"><Link onClick={this.handleSlideNavClick} to='/login'>Log In</Link></li>
             }
           </Menu>
         </nav>
 
         {/* For larger screend */}
         <nav className='wide-nav'>
-          <li id="signupPage" className="menu-item"><Link to='/signup'>Sign up</Link></li>
+          { !loggedIn && <li id="signupPage" className="menu-item"><Link to='/signup'>Sign up</Link></li> }
           {
             this.props.loggedIn
               ? <li onClick={this.handleLogOut} id="logout-link" className="menu-item">Log Out</li>
               : <li id="loginPage" className="menu-item"><Link to='/login'>Log In</Link></li>
           }
+          { loggedIn && <li id="mypolls" className="menu-item"><Link to='/mypolls'>My Polls</Link></li> }
+          { loggedIn && <li id="newpoll" className="menu-item"><Link to='/createpoll'>Create Poll</Link></li> }          
           <li id="home" className="menu-item"><Link to='/'>Home</Link></li>
           <li id="github-page-link" className="menu-item"><a href='https://github.com/libeja/voting-app'>GitHub Project Page</a></li>
         </nav>

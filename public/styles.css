@@ -135,7 +135,8 @@ footer {
 
 /* Form Styles */
 
-.account-info-form {
+.account-info-form,
+.new-poll-form {
   text-align: left;
   width: 250px;
   border: 1px solid #c4c4c4;
@@ -145,21 +146,24 @@ footer {
 }
 
 .account-info-form input[type='text'],
-.account-info-form input[type='password'] {
+.account-info-form input[type='password'],
+.new-poll-form input[type='text'] {
   display: block;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
-.account-info-form .button {
-  background: linear-gradient(#1af0f4, #0e888a);
+.button {
+  background: linear-gradient(#1af0f4, #31a7ca);
   border: 0;
   border-radius: 5px;
   color: #fff;
-  font-size: 1em;
+  font-size: .8em;
   padding: 10px;
   cursor: pointer;
+  margin: 10px;
+  margin-left: 0;
 }
 
 .account-info-form label {

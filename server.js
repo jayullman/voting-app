@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -8,6 +9,8 @@ const connectToDb = require('./controllers/connectToDb');
 connectToDb();
 
 const port = process.env.PORT || 3000;
+
+app.use(bodyParser.json());
 
 // set up static folders
 app.use(express.static(path.join(__dirname, 'public')));

@@ -76,34 +76,45 @@ router.get('/polls', (req, res) => {
   });
 });
 
-// Go to the create new poll page if authenticated
-router.get('/createpoll', checkAuthenticated, (req, res) => {
-  res.redirect('createPollPage.html');
-});
+// // Go to the create new poll page if authenticated
+// router.get('/createpoll', checkAuthenticated, (req, res) => {
+//   res.redirect('createPollPage.html');
+// });
 
 // create new poll if authenticated
 router.post('/createpoll', checkAuthenticated, (req, res) => {
+  console.log(req.body);
   // search db for user
   Poll.findOne({ title: req.body.title }, (err, poll) => {
-
+    console.log(poll);
     // email already exists in database
     if (poll) {
       res.json({ error: 'Poll already exists' });
     } else {
 
       // parse all the option objects from the body
-      var optionsArray = [];
-
-      for (let option in req.body) {
-        if (option.indexOf('option') !== -1) {
+      const optionsArray = [];
+      req.body.options.forEach((option) => {
+        if (option) {
           optionsArray.push(
             {
-              name: req.body[option],
+              name: option,
               votes: 0
             }
           );
         }
-      }
+      });
+
+      // for (let option in req.body) {
+      //   if (option.indexOf('option') !== -1) {
+      //     optionsArray.push(
+      //       {
+      //         name: req.body[option],
+      //         votes: 0
+      //       }
+      //     );
+      //   }
+      // }
 
       const newPoll = new Poll({
         title: req.body.title,
@@ -114,7 +125,7 @@ router.post('/createpoll', checkAuthenticated, (req, res) => {
       // saves new user to the database
       newPoll.save((err, poll) => {
         if (err) throw err;
-        res.redirect('/');
+        res.json(poll);
       })
     }
   })
@@ -139,8 +150,10 @@ router.get('/polls/:pollId', (req, res) => {
 // TODO: add back checkAuthenticated middleware
 router.delete('/polls/:pollId', (req, res) => {
   const pollId = req.params.pollId;
-  Poll.deleteOne({ _id: pollId }, (err) => {
+  Poll.deleteOne({ _id: pollId }, (err, result) => {
     if (err) throw err;
+    console.log(result);
+    res.send(result);
   });
 });
 

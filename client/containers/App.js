@@ -27,7 +27,6 @@ class App extends Component {
         } else {
           this.setState({ loggedIn: false });
         }
-        console.log(response.data.status);
       })
       .catch((err) => {
         console.log(err);
