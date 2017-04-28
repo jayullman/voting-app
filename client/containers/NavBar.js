@@ -48,9 +48,10 @@ class NavBar extends React.Component {
             {!loggedIn && <li id="signupPage" className="menu-item"><Link onClick={this.handleSlideNavClick} to='/signup'>Sign up</Link></li> } 
             {
               loggedIn
-                ? <li onClick={this.handleLogOut} id="logout-link" className="menu-item">Log Out</li>
+                ? <li onClick={this.handleLogOut} className="menu-item"><span className='logout-link'>Log Out</span></li>
                 : <li id="loginPage" className="menu-item"><Link onClick={this.handleSlideNavClick} to='/login'>Log In</Link></li>
             }
+            <li id="github-page-link" className="menu-item"><a target="_blank" href='https://github.com/libeja/voting-app'>Source Code</a></li>
           </Menu>
         </nav>
 
@@ -59,13 +60,13 @@ class NavBar extends React.Component {
           { !loggedIn && <li id="signupPage" className="menu-item"><Link to='/signup'>Sign up</Link></li> }
           {
             this.props.loggedIn
-              ? <li onClick={this.handleLogOut} id="logout-link" className="menu-item">Log Out</li>
+              ? <li onClick={this.handleLogOut} className="menu-item"><span className='logout-link'>Log Out</span></li>
               : <li id="loginPage" className="menu-item"><Link to='/login'>Log In</Link></li>
           }
           { loggedIn && <li id="mypolls" className="menu-item"><Link to='/mypolls'>My Polls</Link></li> }
           { loggedIn && <li id="newpoll" className="menu-item"><Link to='/createpoll'>Create Poll</Link></li> }          
           <li id="home" className="menu-item"><Link to='/'>Home</Link></li>
-          <li id="github-page-link" className="menu-item"><a href='https://github.com/libeja/voting-app'>GitHub Project Page</a></li>
+          <li id="github-page-link" className="menu-item"><a target="_blank" href='https://github.com/libeja/voting-app'>GitHub Project Page</a></li>
         </nav>
       </div>
     );

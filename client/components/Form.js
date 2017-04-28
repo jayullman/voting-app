@@ -1,11 +1,13 @@
 import React from 'react';
 
+// TODO: turn Form into a class to use ajax request instead of form request
+
 const Form = ({ buttonText, url }) => (
   <form className='account-info-form' action={url} method="post">
     <div>
       <label>
         Email
-        <input type="text" name="email" required />
+        <input type="email" name="email" required />
       </label>
     </div>
     <div>

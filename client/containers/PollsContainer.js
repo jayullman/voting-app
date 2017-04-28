@@ -28,7 +28,7 @@ class PollsContainer extends Component {
       <Link key={poll._id} to={`/pollpage/${poll._id}`}><div className='poll-card'>{poll.title}</div></Link>
     );
     return (
-      <div className='pollsContainer'>
+      <div className='polls-container'>
         {polls}
       </div>
     );

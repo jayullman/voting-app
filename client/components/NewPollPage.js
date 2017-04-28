@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import Form from './Form';
-
 class NewPollPage extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +29,7 @@ class NewPollPage extends Component {
           <input type="text" onChange={this.handleTextInput} value={this.state.options[1]} name='1' required />
         </div >
       ]
-    })
+    });
   }
 
   handleSubmit(e) {
@@ -40,7 +38,6 @@ class NewPollPage extends Component {
       title: this.state.title,
       options: this.state.options
     }).then((response) => {
-      console.log(response)
       const pollId = response.data._id;
       this.context.router.history.push(`/pollpage/${pollId}`);
     });

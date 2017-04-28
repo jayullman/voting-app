@@ -1,3 +1,8 @@
+/* Modernizr classes
+.no-touchevents .box { color: red; }
+.touchevents .box { color: green; }
+*/
+
 /* Position and sizing of burger button */
 .bm-burger-button {
   position: fixed;
@@ -10,7 +15,7 @@
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
   background: #373a47;
-  background: #fff;
+  background: #000;
 }
 
 /* Position and sizing of clickable cross button */
@@ -59,25 +64,69 @@ body {
   font-size: 16px;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
+  min-width: 280px;
 }
 
 h1 {
   font-weight: 400;
 }
 
-/* Navigation Styles */
-nav a, nav li {
-  color: #fff;
+/* Main Container Styles */
+.main-container p {
+  width: 70%;
+  min-width: 300px;
+  max-width: 700px;
+  margin: 0 auto 20px auto;
 }
+
+
+/* Navigation Styles */
 
 nav li {
   list-style-type: none;
   padding-left: 20px;
 }
 
+.wide-nav li {
+  color: #000;
+}
+
+.wide-nav a, .wide-nav a:visited {
+  color: #000;
+  text-decoration: none;
+}
+
+.no-touchevents .wide-nav a:hover {
+  border-bottom: 1px solid #000;
+}
+
+.narrow-nav li {
+  color: #fff;
+}
+
+.narrow-nav a, .narrow-nav a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+.no-touchevents .narrow-nav a:hover {
+  border-bottom: 1px solid #fff;
+}
+
+.logout-link {
+  cursor: pointer;
+}
+
+.no-touchevents nav .logout-link:hover {
+  border-bottom: 1px solid #000;
+}
+
 .nav-container {
   height: 30px;
   background-color: #31a7ca;
+  background-color: #fff;
+  padding-top: 10px;
+  padding-right: 20px;
 }
 
 .wide-nav {
@@ -90,6 +139,10 @@ nav li {
 
 #github-page-link {
   float: left;
+}
+
+.narrow-nav li {
+  margin-bottom: 15px;
 }
 
 /* Header Styles */
@@ -133,6 +186,32 @@ footer {
   text-align: center;
 }
 
+.poll-card {
+  border: 1px solid #868686;
+  width: 70%;
+  max-width: 700px;
+  min-width: 300px;
+  margin: 0 auto;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.polls-container a,
+.polls-container a:visited {
+  color: #000;
+  text-decoration: none;
+}
+
+.no-touchevents .poll-card:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.no-touchevents .polls-container a:active {
+  text-decoration: none;
+  color: #fff;
+}
+
 /* Form Styles */
 
 .account-info-form,
@@ -145,13 +224,14 @@ footer {
   padding: 20px;
 }
 
-.account-info-form input[type='text'],
+.account-info-form input[type='email'],
 .account-info-form input[type='password'],
 .new-poll-form input[type='text'] {
   display: block;
   border: 1px solid #c4c4c4;
   border-radius: 5px;
   margin-bottom: 10px;
+  width: 200px;
 }
 
 .button {

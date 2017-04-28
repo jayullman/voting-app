@@ -6,6 +6,15 @@ import Header from '../components/Header';
 import Main from '../components/Main';
 import Footer from '../components/Footer';
 
+// feature detection for touch events to allow
+// for css styling for touch screens
+/* 
+example:
+.no-touchevents .box { color: red; }
+.touchevents .box { color: green; }
+*/
+import '../../helpers/modernizr-touch';
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -47,11 +56,6 @@ class App extends Component {
         <Header />
         <Main loggedIn={this.state.loggedIn} />
         <Footer />
-        {
-          this.state.loggedIn
-            ? <p>Logged in</p>
-            : <p>Logged out</p>
-        }
       </div>
     );
   }

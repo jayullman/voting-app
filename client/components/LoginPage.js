@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Form from './Form';
 
@@ -14,6 +15,9 @@ const LoginPage = () => (
       url='/login'
       buttonText='Log In'
     />
+    <p>
+      Don't have an account? <Link to='/signup'>Sign up here</Link>.
+    </p>
   </div>
 );
 

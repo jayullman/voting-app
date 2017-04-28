@@ -18,7 +18,7 @@ const Main = (outerProps) => {
   );
 
   return (
-    <div>
+    <div className='main-container'>
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/mypolls' component={MyPolls} />

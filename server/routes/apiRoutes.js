@@ -20,7 +20,7 @@ router.get('/secret', function(req, res) {
 });
 
 router.post('/login',
-  passport.authenticate('local', { failureRedirect: '/' }),
+  passport.authenticate('local', { failureRedirect: 'error-page.html' }),
   function (req, res, info) {
     res.redirect('/');
   }
@@ -61,7 +61,7 @@ router.post('/signup', function (req, res) {
         // log new user in
         req.login(user, (err) => {
           if (err) return next(err);
-          res.redirect('createPollPage.html');
+          res.redirect('/');
         });
       })
     }
