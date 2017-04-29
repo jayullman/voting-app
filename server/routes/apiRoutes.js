@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const passport = require('passport');
+const bcrypt = require('bcrypt-nodejs');
 
 const router = express.Router();
 
@@ -26,6 +27,16 @@ router.post('/login',
   }
 );
 
+router.get('/whoami', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json(
+      { 
+        email: req.user.email,
+        id: req.user._id
+      });
+  }
+});
+
 router.post('/amiloggedin', (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ status: true} );
@@ -47,12 +58,16 @@ router.post('/signup', function (req, res) {
 
     // email already exists in database
     if (user) {
-      res.json({ error: 'Email is in use' });
+      res.redirect('/email-in-use.html');
     } else {
+      // use bcrypt to encrypt user's password in the database
+      const hash = bcrypt.hashSync(req.body.password)
+
       const newUser = new User({
         email: req.body.email,
-        password: req.body.password
+        password: hash
       });
+      console.log(newUser);
 
       // saves new user to the database
       newUser.save((err, user) => {
@@ -139,6 +154,14 @@ router.get('/mypolls', checkAuthenticated, (req, res) => {
   });
 });
 
+router.get('/getpolls/:user', (req, res) => {
+  console.log('here!');
+  const userId = req.params.user;
+  Poll.find({ creator: userId }, (err, polls) => {
+    res.json(polls);
+  });
+});
+
 // get information on a specific poll
 router.get('/polls/:pollId', (req, res) => {
   const pollId = req.params.pollId;  
@@ -160,14 +183,14 @@ router.delete('/polls/:pollId', (req, res) => {
 // votes on a poll
 router.put('/polls/:pollId', (req, res) => {
 
-  // temp value
-  const userId = 5443;
+  let userId = null;
+  if (req.isAuthenticated()) {
+    userId = req.user.id;
+  } 
 
   const pollId = req.params.pollId;
-  console.log(pollId);
   // name of the option voted for
   const option = req.query.option;
-  console.log(option);
   Poll.findById(pollId, (err, poll) => {
 
     // returns if poll is not found
@@ -176,11 +199,16 @@ router.put('/polls/:pollId', (req, res) => {
     const optArr = poll.options;
     const votersArr = poll.voters;
 
+    // get user's IP address 
+    const voterIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    
     // checks if user has already voted in poll
-    if (votersArr.indexOf(userId) === -1) {
+    if (votersArr.indexOf(userId) !== -1 || votersArr.indexOf(voterIP) !== -1) {
+      return res.json({ error: 'This user or IP address has already voted on this poll!' });
+    } else {
       votersArr.push(userId);
     }
-
+    
     // find index of option
     const term = option;
     const index = optArr.reduce((p, option, i) => {
@@ -211,7 +239,10 @@ router.put('/polls/newoption/:pollId', (req, res) => {
    return res.sendStatus(401);
   }
 
-  const userId = 5443;
+  let userId = null;
+  if (req.isAuthenticated()) {
+    userId = req.user.id;
+  } 
   
   const pollId = req.params.pollId;
 
@@ -244,6 +275,8 @@ router.put('/polls/newoption/:pollId', (req, res) => {
     // checks if user has already voted in poll
     if (votersArr.indexOf(userId) === -1) {
       votersArr.push(userId);
+    } else {
+      return res.json({ error: 'This user or IP address has already voted on this poll!' });
     }
     
     Poll.findByIdAndUpdate(
@@ -256,6 +289,33 @@ router.put('/polls/newoption/:pollId', (req, res) => {
     );
     res.send('ok');    
   });
+});
+
+// router.get('/test', (req, res) => {
+//   res.send('<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /><script src="https://use.fontawesome.com/cd50ad1c20.js"></script><title>Voting App</title><link rel="stylesheet" href="styles.css"></head><body><div id="root"></div><script src="app.js"></script></body></html>')
+// });
+
+// this route will handle sharing user polls
+// the route creates a template and injects a variable containing the route to the
+// users polls
+router.get('/userpolls/:user', (req, res) => {
+  res.send(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <script src="https://use.fontawesome.com/cd50ad1c20.js"></script>
+  <title>Voting App</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    var userRoute = '${req.params.user}';
+  </script>
+  <script src="/app.js"></script>
+</body>
+</html>`)
 });
 
 // route will handle if user enters url into address bar

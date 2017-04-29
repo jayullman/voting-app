@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import NavBar from './NavBar';
 import Header from '../components/Header';
@@ -21,10 +22,14 @@ class App extends Component {
 
     this.state = {
       loggedIn: false,
+      // email of user currently logged in
+      currentUserEmail: '',
+      currentUserId: '',
       pollsArray: []
     };
 
     this.toggleLoggedInStatus = this.toggleLoggedInStatus.bind(this);
+    this.getCurrentUser = this.getCurrentUser.bind(this);
   }
 
   toggleLoggedInStatus() {
@@ -33,6 +38,7 @@ class App extends Component {
       .then((response) => {
         if (response.data.status === true) {
           this.setState({ loggedIn: true });
+          this.getCurrentUser();
         } else {
           this.setState({ loggedIn: false });
         }
@@ -42,7 +48,24 @@ class App extends Component {
       });
   }
 
+  getCurrentUser() {
+    axios('/whoami')
+      .then((response) => {
+        console.log(response.data);
+        this.setState(
+          { 
+            currentUserEmail: response.data.email,
+            currentUserId: response.data.id 
+          });
+      });
+  }
+
   componentDidMount() {
+    // check if app should route to user polls
+    if (window.userRoute) {
+      this.context.router.history.push('/signup');
+    }
+
     this.toggleLoggedInStatus(); 
   }
 
@@ -52,13 +75,22 @@ class App extends Component {
         <NavBar
           toggleLoggedInStatus={this.toggleLoggedInStatus}
           loggedIn={this.state.loggedIn}
+          currentUserId={this.state.currentUserId}
         />
         <Header />
-        <Main loggedIn={this.state.loggedIn} />
+        <Main 
+          loggedIn={this.state.loggedIn} 
+          currentUserEmail={this.state.currentUserEmail}
+          currentUserId={this.state.currentUserId}
+        />
         <Footer />
       </div>
     );
   }
 }
+
+App.contextTypes = {
+  router: PropTypes.object
+};
 
 export default App;

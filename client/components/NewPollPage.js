@@ -44,7 +44,6 @@ class NewPollPage extends Component {
   }
 
   handleTextInput(e) {
-    console.log(e.target.value);
     if (e.target.name === 'title') {
       this.setState({ title: e.target.value });
     } else {
@@ -52,7 +51,6 @@ class NewPollPage extends Component {
       newArr[parseInt(e.target.name, 10)] = e.target.value;
       this.setState({ options: newArr });
     }
-    console.log(this.state);
   }
 
   // adds new option to the form
@@ -82,8 +80,8 @@ class NewPollPage extends Component {
           </div>
           {this.state.formOptions}
           <div>
-            <button className='button add-option' onClick={this.addOption}>Add Option</button>
             <input className='button' type='Submit' defaultValue='Submit Poll' />
+            <button className='button add-option' onClick={this.addOption}>Add Option</button>
           </div>
         </form>
       </div>

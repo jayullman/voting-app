@@ -4,6 +4,25 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Chart from 'chart.js';
 
+const colorsArray = [
+  // blue
+  '#42d4f4',
+  // green
+  '#41f48e',
+  // yellow
+  '#d9f441',
+  // orange
+  '#f48b41',
+  // lilac
+  '#e426f9',
+  // purple
+  '#d941f4',
+  // red
+  '#f9273c',
+  // aqua
+  '#21efef'
+];
+
 class PollPage extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +36,7 @@ class PollPage extends Component {
     };
 
     this.handleSelection = this.handleSelection.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleVote = this.handleVote.bind(this);
     this.retrievePollData = this.retrievePollData.bind(this);
     this.renderChart = this.renderChart.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -38,6 +57,8 @@ class PollPage extends Component {
     // if user selects custom choice
     if (event.target.value === 'addedCustomOption') {
       this.setState({ customOptionView: true });
+    } else {
+      this.setState({ customOptionView: false });
     }
 
     this.setState({ selectedValue: event.target.value });
@@ -55,7 +76,7 @@ class PollPage extends Component {
       });
   }
 
-  handleSubmit(event) {
+  handleVote(event) {
     event.preventDefault();
 
     let voteUrl;
@@ -69,8 +90,11 @@ class PollPage extends Component {
 
     axios.put(voteUrl)
       .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+
         // if vote was successful, reload chart
-        if (response.data === 'ok') {
+        } else if (response.data === 'ok') {
           this.retrievePollData()
             .then((data) => {
               this.renderChart(data.data);
@@ -83,6 +107,13 @@ class PollPage extends Component {
   }
 
   renderChart(pollData) {
+    const selectColors = (item, index) => {
+      const colorsArrayLength = colorsArray.length;
+
+      return colorsArray[index % colorsArrayLength];
+    };
+
+
     // destroys all previous chart instances to fix rendering bug
     this.state.chartInstances.forEach((chart) => {
       chart.destroy();
@@ -92,8 +123,8 @@ class PollPage extends Component {
 
     const optionNames = options.map(option => option.name);
     const votes = options.map(option => option.votes);
-    const backgroundColors = options.map(() => 'rgba(255, 99, 132, 0.2)');
-    const borderColors = options.map(() => 'rgba(255, 99, 132, 0.2)');
+    const backgroundColors = options.map(selectColors);
+    const borderColors = backgroundColors;
 
     const ctx = this.chart;
     const myChart = new Chart(ctx, {
@@ -147,7 +178,7 @@ class PollPage extends Component {
          {/* <h1>{this.state.pollData}</h1> */}
         <h2>{title}</h2>
 
-        <form onSubmit={this.handleSubmit}>
+        <form className='vote-form' onSubmit={this.handleVote}>
           <select onChange={this.handleSelection} value={this.state.selectedValue} name='vote'>
             {optionSelections}
           </select>
@@ -156,15 +187,15 @@ class PollPage extends Component {
               ? <input type='text' onChange={this.handleTextChange} value={this.state.customOptionText} />
               : null
           }
-          <input type='submit' value='Vote!'/>
+          <input className='button' type='submit' value='Vote!'/>
         </form>
-        <div className='poll-container'>
+        <div className='chart-container'>
           <canvas 
             ref={(chart) => { this.chart = chart; }} 
             width='100' 
             height='100' 
           />
-          { this.props.loggedIn && <button onClick={this.deletePoll}>Delete Poll</button> }
+          { this.props.loggedIn && <button className='button delete-button' onClick={this.deletePoll}>Delete Poll</button> }
         </div>
       </div>
     );

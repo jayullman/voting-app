@@ -8,13 +8,17 @@ class PollsContainer extends Component {
     super(props);
 
     this.state = {
-      pollsArray: []
+      pollsArray: [],
+      emptyPolls: false
     };
   }
 
   componentDidMount() {
     axios(this.props.url)
       .then((response) => {
+        if (response.data.length === 0) {
+          this.setState({ emptyPolls: true });
+        }
         this.setState({ pollsArray: response.data });
       })
       .catch((err) => {
@@ -30,6 +34,12 @@ class PollsContainer extends Component {
     return (
       <div className='polls-container'>
         {polls}
+        {
+          this.state.emptyPolls && 
+            <div className='empty-polls-container'>
+              No polls created yet!
+            </div>
+        }
       </div>
     );
   }

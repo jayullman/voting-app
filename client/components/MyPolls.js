@@ -2,11 +2,10 @@ import React from 'react';
 
 import PollsContainer from '../containers/PollsContainer';
 
-const url = '/mypolls';
-
-const MyPolls = () => (
+const MyPolls = props => (
   <div>
-    <PollsContainer url={url} />
+    <p>Polls submitted by {props.currentUserEmail}</p>
+    <PollsContainer url={props.url} />
   </div>
 );
 

@@ -54,6 +54,10 @@
 
 /* End hamburger menu styles */
 
+* {
+  outline: 0;
+}
+
 body, html {
   padding: 0;
   margin: 0;
@@ -77,6 +81,7 @@ h1 {
   min-width: 300px;
   max-width: 700px;
   margin: 0 auto 20px auto;
+  padding-top: 20px;
 }
 
 
@@ -137,8 +142,12 @@ nav li {
   float: right;
 }
 
-#github-page-link {
+#github-page-link-wide {
   float: left;
+}
+
+#github-page-link-narrow {
+  margin-top: 30px;
 }
 
 .narrow-nav li {
@@ -166,6 +175,7 @@ footer {
   color: #000;
   text-align: center;
   padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .icons-container a {
@@ -176,8 +186,13 @@ footer {
 		border: 0;
 }
 
-.icons-container a:hover {
-			top: 3px;
+.icons-container a,
+.icons-container a:visited {
+  color: #000;
+}
+
+.no-touchevents .icons-container a:hover {
+	top: 3px;
 }
 
 /* PollsPage Styles */
@@ -200,6 +215,10 @@ footer {
 .polls-container a:visited {
   color: #000;
   text-decoration: none;
+}
+
+.empty-polls-container {
+  height: 300px;
 }
 
 .no-touchevents .poll-card:hover {
@@ -246,13 +265,30 @@ footer {
   margin-left: 0;
 }
 
+.delete-button {
+  background: linear-gradient(#f66868, #dc3939);
+}
+
 .account-info-form label {
   display: block;
+}
+
+.vote-form input,
+.vote-form select {
+  display: block;
+  margin: 0 auto 20px auto;
 }
 
 /* the div that displays the poll title on the main page */
 .poll-card {
   text-align: center;
+}
+
+.chart-container {
+  margin: 0 auto;
+  width: 75%;
+  max-width: 500px;
+  min-width: 280px;
 }
 
 @media (max-width: 460px) {
