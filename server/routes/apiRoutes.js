@@ -37,6 +37,16 @@ router.get('/whoami', (req, res) => {
   }
 });
 
+router.get('/findemailbyid/:id', (req, res) => {
+  User.findOne({ _id: req.params.id }, (err, user) => {
+    if (!user) {
+      res.json({ error: 'No user by that ID exists' });
+    } else {
+      res.json({ email: user.email });
+    }
+  });
+});
+
 router.post('/amiloggedin', (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ status: true} );
@@ -155,7 +165,6 @@ router.get('/mypolls', checkAuthenticated, (req, res) => {
 });
 
 router.get('/getpolls/:user', (req, res) => {
-  console.log('here!');
   const userId = req.params.user;
   Poll.find({ creator: userId }, (err, polls) => {
     res.json(polls);

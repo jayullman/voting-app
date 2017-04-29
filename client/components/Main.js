@@ -30,12 +30,18 @@ const Main = (outerProps) => {
       {...props}
     />;
 
-  const UserPollsWrapper = props =>
-    <UserPolls
-      currentUserEmail={outerProps.currentUserEmail}
-      url={`/getpolls/${window.userRoute}`}
-      {...props}
-    />;
+  const UserPollsWrapper = (props) => {
+    const userRoute = props.match.params.userid;
+    return (
+      <UserPolls
+        currentUserEmail={outerProps.currentUserEmail}
+        url={`/getpolls/${userRoute}`}
+        {...props}
+      />
+    );
+  }
+    
+// TODO: figure out out to route userpolls page 
 
   return (
     <div className='main-container'>
