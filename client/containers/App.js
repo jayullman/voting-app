@@ -50,6 +50,7 @@ class App extends Component {
   getCurrentUser() {
     axios('/whoami')
       .then((response) => {
+        console.log(response);
         this.setState(
           { 
             currentUserEmail: response.data.email,
@@ -60,19 +61,6 @@ class App extends Component {
 
   componentDidMount() {
     // check if app should route to user polls
-    if (window.userRoute) {
-      console.log('here');
-      axios(`/findemailbyid/${window.userRoute}`)
-        .then((response) => {
-          if (response.data.error) {
-            alert('No user by that id');
-          } else {
-            this.setState({ currentUserEmail: response.data.email }, () => {
-              this.context.router.history.push(`/userpolls/${window.userRoute}`);
-            });
-          }
-        })
-    }
 
     this.toggleLoggedInStatus(); 
   }

@@ -32,10 +32,12 @@ const Main = (outerProps) => {
 
   const UserPollsWrapper = (props) => {
     const userRoute = props.match.params.userid;
+  
     return (
       <UserPolls
         currentUserEmail={outerProps.currentUserEmail}
         url={`/getpolls/${userRoute}`}
+        userRoute={userRoute}
         {...props}
       />
     );

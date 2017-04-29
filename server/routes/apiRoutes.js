@@ -38,7 +38,7 @@ router.get('/whoami', (req, res) => {
 });
 
 router.get('/findemailbyid/:id', (req, res) => {
-  User.findOne({ _id: req.params.id }, (err, user) => {
+  User.findById(req.params.id, (err, user) => {
     if (!user) {
       res.json({ error: 'No user by that ID exists' });
     } else {
@@ -101,11 +101,6 @@ router.get('/polls', (req, res) => {
   });
 });
 
-// // Go to the create new poll page if authenticated
-// router.get('/createpoll', checkAuthenticated, (req, res) => {
-//   res.redirect('createPollPage.html');
-// });
-
 // create new poll if authenticated
 router.post('/createpoll', checkAuthenticated, (req, res) => {
   console.log(req.body);
@@ -129,17 +124,6 @@ router.post('/createpoll', checkAuthenticated, (req, res) => {
           );
         }
       });
-
-      // for (let option in req.body) {
-      //   if (option.indexOf('option') !== -1) {
-      //     optionsArray.push(
-      //       {
-      //         name: req.body[option],
-      //         votes: 0
-      //       }
-      //     );
-      //   }
-      // }
 
       const newPoll = new Poll({
         title: req.body.title,
@@ -300,34 +284,18 @@ router.put('/polls/newoption/:pollId', (req, res) => {
   });
 });
 
-// router.get('/test', (req, res) => {
-//   res.send('<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /><script src="https://use.fontawesome.com/cd50ad1c20.js"></script><title>Voting App</title><link rel="stylesheet" href="styles.css"></head><body><div id="root"></div><script src="app.js"></script></body></html>')
-// });
-
-// this route will handle sharing user polls
-// the route creates a template and injects a variable containing the route to the
-// users polls
+// route will handle if user wants to see the polls of another user
 router.get('/userpolls/:user', (req, res) => {
-  res.send(`<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-  <script src="https://use.fontawesome.com/cd50ad1c20.js"></script>
-  <title>Voting App</title>
-  <link rel="stylesheet" href="/styles.css">
-</head>
-<body>
-  <div id="root"></div>
-  <script>
-    var userRoute = '${req.params.user}';
-  </script>
-  <script src="/app.js"></script>
-</body>
-</html>`)
+  User.findById(req.params.user, (err, user) => {
+    if (!user) {
+      res.sendFile(path.join(__dirname, '../../public', 'no-user.html'));
+    } else {
+      res.sendFile(path.join(__dirname, '../../public', 'index.html'));
+    }
+  });
 });
 
-// route will handle if user enters url into address bar
+// route will redirect to home page when no other route matches
 router.get('*', (req, res) => {
   res.redirect('/');
 });
