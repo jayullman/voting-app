@@ -1,5 +1,7 @@
 # Voting App with Authentication
 
+Live site: https://fcc-voting-booth.herokuapp.com/
+
 A full stack application integrated with MongoDB. Created with a Node/Express backend and a ReactJS front end.
 
 ### User Stories:
