@@ -179,7 +179,11 @@ router.put('/polls/:pollId', (req, res) => {
   let userId = null;
   if (req.isAuthenticated()) {
     userId = req.user.id;
-  } 
+    
+    // use IP address if voter is not authenticated
+  } else {
+    userId = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  }
 
   const pollId = req.params.pollId;
   // name of the option voted for
@@ -192,11 +196,8 @@ router.put('/polls/:pollId', (req, res) => {
     const optArr = poll.options;
     const votersArr = poll.voters;
 
-    // get user's IP address 
-    const voterIP = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    
     // checks if user has already voted in poll
-    if (votersArr.indexOf(userId) !== -1 || votersArr.indexOf(voterIP) !== -1) {
+    if (votersArr.indexOf(userId) !== -1) {
       return res.json({ error: 'This user or IP address has already voted on this poll!' });
     } else {
       votersArr.push(userId);
