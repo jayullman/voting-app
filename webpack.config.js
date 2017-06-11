@@ -1,6 +1,7 @@
 var path = require('path');
+var webpack = require('webpack');
 
-module.exports = {
+var config = {
   entry: './client/index.js',
   output: {
     filename: 'app.js',
@@ -24,5 +25,19 @@ module.exports = {
     contentBase: __dirname + '/public'
   },
   devtool: 'eval-source-map',
-  watch: true
+  plugins: []
 }
+
+if (process.env.NODE_ENV === 'production') {
+  delete config.devtool;
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify("production")
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin()
+  );
+}
+
+module.exports = config;
